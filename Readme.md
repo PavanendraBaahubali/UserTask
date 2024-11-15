@@ -158,7 +158,7 @@ startServer();
 
 **Description**:
 
-- This endpoint allows users to update the details of an existing healthcare service. The request must include the unique service ID to identify which service should be modified. Additionally, it accepts fields that the user wants to update, such as the service name, description, or price. Upon successful completion of the update, a success message is returned, confirming that the service data has been modified. This feature ensures that healthcare service information remains current and accurate.
+- This endpoint allows users to update the details of an existing healthcare service. The request must include the unique `serviceId` to identify which service should be modified. Additionally, it accepts fields that the user wants to update, such as the `service name`, `service description`, or `service price`. Upon successful completion of the update, a success message is returned, confirming that the service data has been modified. This feature ensures that healthcare service information remains current and accurate.
 
 **Example Request**
 
@@ -182,10 +182,47 @@ startServer();
 
 - **Response Body**:
 
-       ```
-        {
-      "message": "General Checkup Health Care has been successfully updated."
-      }
-       ```
+  ```
+  {
+     "message": "General Checkup Health Care has been successfully updated."
+  }
+  ```
 
   <img src="./assets/updateServiceResponse.PNG" alt="updateServiceResponse" height="300px">
+
+### 3) Delete Health Care Service
+
+**Endpoint**: `/api/v1/deleteService`
+
+**Request Method** : `DELETE`
+
+**Description**:
+
+- This endpoint allows users to delete an existing healthcare service from the database. The request requires the `serviceId` of the record that needs to be deleted. Once the service is identified and removed, it will no longer be available for retrieval or display in the system. This functionality ensures efficient management of healthcare services by enabling the removal of outdated or unnecessary records.
+
+**Example Request**
+
+<img src="./assets/deleteServiceRequest" alt="deleteServiceRequest" height="300px">
+
+- **Request Body**
+
+  ```
+  {
+  "serviceId" : "6736e8d0420ff10acf48f5de"
+  }
+
+  ```
+
+**Expected Response**
+
+- **Status**: 200 OK
+
+- **Response Body**:
+
+  ```
+  {
+     "message": "6736e8d0420ff10acf48f5de has been deleted successfully."
+  }
+  ```
+
+  <img src="./assets/deleteServiceResponse.PNG" alt="deleteServiceResponse.PNG" height="300px">

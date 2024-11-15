@@ -69,6 +69,10 @@ const updateHealthCareServices = async (req, res) => {
 // Delete health care
 const deleteHealthCareService = async (req, res) => {
   const { serviceId } = req.body;
+  console.log(serviceId, "from controller");
+  if (!serviceId) {
+    return res.status(404).json({ message: "Service Id is required" });
+  }
   try {
     const msg = await healthCareServices.deleteServie({ serviceId });
     return res.status(200).json({ message: msg });

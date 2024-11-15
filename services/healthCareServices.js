@@ -61,10 +61,12 @@ const updateService = async (data) => {
 };
 
 const deleteServie = async ({ serviceId }) => {
+  console.log("from service", serviceId);
   try {
     await HealthCare.findOneAndDelete({
       _id: new mongoose.Types.ObjectId(serviceId),
     });
+
     return `${serviceId} has been deleted successfully.`;
   } catch (err) {
     throw new Error(err);
