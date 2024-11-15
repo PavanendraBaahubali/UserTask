@@ -1,10 +1,10 @@
 # Health Care Service
 
 # Overview
+
 - This is a simple Health care services API. User can add health care data such as service Name, service description, service price.
 - and user can update the health care data, delete the data.
 - User can also get all the available data from the database.
-
 
 # Set up and Installation
 
@@ -22,9 +22,8 @@
 
 - **mongoose**: Mongoose is an Object Data Modeling (ODM) library for MongoDB and Node.js. It manages relationships between data, provides schema validation, and offers a straightforward query API for interacting with MongoDB. Mongoose is particularly useful for defining models and handling database operations in a structured manner.
 
-
-
 ### Establishing Data Base Connection
+
 - Before we start the server, we've to connect our db.
 
 ```
@@ -46,8 +45,8 @@ module.exports = connectDB;
 
 ```
 
-### Start the server ###
-  
+### Start the server
+
 After establishing the connection to our database then we can start our server.
 
 ```
@@ -72,31 +71,30 @@ startServer();
 
 **Endpoint**: `/api/v1/addService`
 
-**Request Method** : ```POST```
+**Request Method** : `POST`
 
-**Description**: 
-  Accepts a task request for a specific user, adding it to the task queue if it meets rate limits and other processing requirements.
-  
+**Description**:
+Accepts a task request for a specific user, adding it to the task queue if it meets rate limits and other processing requirements.
+
 **Request Body** :
 
-   ```
-    
-    {
-    "serviceName" : "General Checkup",
-    "serviceDescription" : "Routine physical examination to assess overall health.",
-    "servicePrice" : "100$"
-    }
-    
-   ```
-    
+```
+
+ {
+ "serviceName" : "General Checkup",
+ "serviceDescription" : "Routine physical examination to assess overall health.",
+ "servicePrice" : "100$"
+ }
+
+```
+
 **Example Request**
 
 ![addServiceExample](./assets/addServiceExample.PNG)
 
-
 **Expected Response**
 
- - **Success Response**
+- **Success Response**
 
 **Status**: 200 OK
 
@@ -110,20 +108,4 @@ startServer();
 }
 ```
 
-![addServiceRequest](./assets/addServiceRequest.PNG)
-
-  
-    
-    
-
-
-
-       
-  
-
-
-
-
-
-
-
+![addServiceRequest](./assets/addServiceResponse.PNG)
