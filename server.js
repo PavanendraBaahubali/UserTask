@@ -10,12 +10,11 @@ app.use(express.json());
 const startServer = async () => {
   const PORT = process.env.PORT;
   try {
-    const db = await connectDB();
+    await connectDB();
     app.use("/api/v1/healthCare", healthServiceRouter());
     app.listen(PORT, () => console.log(`server is running on port ${PORT}`));
   } catch (err) {
     console.log(err);
-    return res.status(500).json({ message: "Internal Server Error" });
   }
 };
 

@@ -1,9 +1,7 @@
 const mongoose = require("mongoose");
 
-const dbURI =
-  "mongodb+srv://konkonapalapavan925:SgNzRZ3PrLpqI23L@learnnode.fv8cc.mongodb.net/HealthCare?retryWrites=true&w=majority&appName=LearnNode";
-
 const connectDB = async () => {
+  const dbURI = process.env.dbURI;
   try {
     await mongoose.connect(dbURI);
     console.log("Database connected");

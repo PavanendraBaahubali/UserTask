@@ -5,7 +5,7 @@ const healthServiceRouter = () => {
   const router = express.Router();
   try {
     // add router
-    router.post("/add", (req, res) =>
+    router.post("/addService", (req, res) =>
       healthServiceController.addHealthCareSerivce(req, res)
     );
 
