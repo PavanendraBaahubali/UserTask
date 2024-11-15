@@ -97,7 +97,7 @@ startServer();
 
 **Example Request**
 
-<img src="./assets/addServiceExample" alt="addServiceExample" height="300px">
+<img src="./assets/addServiceExample.PNG" alt="addServiceExample" height="300px">
 
 **Expected Response**
 
