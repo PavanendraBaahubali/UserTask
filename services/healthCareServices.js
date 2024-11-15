@@ -53,7 +53,7 @@ const updateService = async (data) => {
     }
 
     await serviceCareData.save();
-    return `${req.body.serviceId}, ${req.body.serviceName} is successfully updated.`;
+    return `${serviceName} has been successfully updated.`;
   } catch (err) {
     console.log(err);
     throw new Error(err);
