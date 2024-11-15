@@ -127,7 +127,7 @@ startServer();
 
 **Example Request**
 
-<img src="./assets/getAllServicesRequest" alt="getAllServicesRequest" height="300px">
+<img src="./assets/getAllServicesRequest.PNG" alt="getAllServicesRequest" height="300px">
 
 **Expected Response**
 
@@ -148,7 +148,7 @@ startServer();
           ]
        ```
 
-  <img src="./assets/getAllServicesResponse" alt="getAllServicesResponse" height="300px">
+  <img src="./assets/getAllServicesResponse.PNG" alt="getAllServicesResponse" height="300px">
 
 ### 3) Update Health Care Services
 
@@ -162,7 +162,7 @@ startServer();
 
 **Example Request**
 
-<img src="./assets/updateServiceRequest" alt="updateServiceRequest" height="300px">
+<img src="./assets/updateServiceRequest.PNG" alt="updateServiceRequest" height="300px">
 
 - **Request Body**
 
@@ -188,4 +188,4 @@ startServer();
       }
        ```
 
-  <img src="./assets/updateServiceResponse" alt="updateServiceResponse" height="300px">
+  <img src="./assets/updateServiceResponse.PNG" alt="updateServiceResponse" height="300px">
