@@ -226,3 +226,7 @@ startServer();
   ```
 
   <img src="./assets/deleteServiceResponse.PNG" alt="deleteServiceResponse.PNG" height="300px">
+
+# Conclusion
+
+- This API simplifies managing healthcare services with endpoints to create, update, delete, and retrieve data. By defining clear data models and leveraging RESTful principles, it aims to enhance service availability and management in healthcare systems.
