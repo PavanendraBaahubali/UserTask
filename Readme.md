@@ -183,6 +183,32 @@ const startServer = async () => {
 
     <img src="./assets/authLoginResponse.PNG" alt="Add Service response" >
 
+## NOTE
+
+- To perform any CRUD operation, the user must include a valid JWT token in the request's authorization headers. If no token is provided, the request will result in a "NO TOKEN FOUND" error response.
+- Users receive a JWT token upon registering or logging in, which serves as a means of authenticating subsequent requests.
+- If the token is modified, tampered with, or deemed invalid, an appropriate error message will be returned, and the request will be rejected.
+- Therefore, before making any CRUD operation requests, ensure that you are sending a valid token in the authorization headers for successful access and operation.
+
+### Example
+
+- Let's make a crud request without sending jwt token.
+- If user tries to delete a task without jwt token
+
+- **Request**
+  <img src="./assets/deleteTaskRequest.PNG" alt="deleteTaskRequest" >
+
+- **Response**
+
+  <img src="./assets/tokenNotFound.PNG" alt="tokenNotFound" >
+
+- To make it work, user has to include token
+
+  <img src="./assets/includeToken.PNG" alt="includeToken" >
+
+- **Response**
+  <img src="./assets/includeTokenResponse.PNG" alt="includeTokenResponse" >
+
 ### 1) Add User Task
 
 **Endpoint**: `/api/v1/addTask`
