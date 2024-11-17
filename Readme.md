@@ -77,6 +77,53 @@ const startServer = async () => {
 }
 ```
 
+# Models
+
+## User Schema
+
+- To store user data in the database, we need a well-defined schema. Each user has fields such as `userName`, `password`, and `emailId` to capture essential information.
+- This user schema ensures that the data being registered and managed adheres to the correct structure, enabling consistency and integrity in the database.
+- By defining the user schema, we can easily validate and handle user data before storing it in the database, which is crucial for registration and other user management operations.
+
+- **User Schema**
+
+  ```
+  const userSchema = new mongoose.Schema({
+  userName: { type: String, required: true },
+  passWord: { type: String, required: true },
+  emailId: { type: String, required: true },
+  });
+  ```
+
+## User Task Schema
+
+- To add a new task to the database, we need a well-defined schema. A task typically consists of fields such as `taskName`, `taskDescription`, and `taskDue` to capture the key details of each task.
+- This schema ensures that all tasks adhere to a structured format, providing consistency and making data management easier.
+- By using a task schema, we can validate task data before adding it to the database, ensuring data accuracy and completeness for every task created. This structure also facilitates easier retrieval, updating, and management of tasks.
+
+```
+const userTaskSchema = new mongoose.Schema({
+  taskName: { type: String, required: true },
+  taskDescription: { type: String, required: true },
+  taskDue: { type: String, required: true },
+  taskCreatedAt: { type: String, default: getFormatedDate() },
+  taskUpdatedAt: { type: String, default: "" },
+  taskStatus: { type: String, default: "Pending" },
+});
+```
+
+# Assumptions
+
+- When a task is created, I assume its initial status is set to `Pending` by default, as it has not been completed yet and still requires action. This default status ensures clarity on the task's current state.
+
+- If a user updates an existing task, I consider the task to be `In Progress` indicating that work is ongoing and the task is actively being worked on.
+
+- When a user sends a PATCH request marking the task as completed, the status transitions to `Completed` signifying that the task has been successfully finished.
+
+- When a user makes an update request, the taskStatus field is changed to `In Progress`. Additionally, the taskUpdatedAt field is set to the current timestamp, with its initial value being empty until an update occurs.
+
+- When a user creates a new task, the taskCreatedAt field is automatically filled with the current date and time by default.
+
 # API Usage
 
 - User has to register before doing any crud operations.
@@ -289,16 +336,15 @@ const startServer = async () => {
 - **Response Body**:
 
   ```
-         {
-    "_id": "673998e360d8b409bb1b7ab6",
-    "taskName": "Do work",
-    "taskDescription": "nothing",
-    "taskTitle": "Don't know",
-    "taskDue": "13/04/2025",
-    "taskCreatedAt": "2024-11-17 12:48:34",
-    "taskUpdatedAt": "",
-    "__v": 0,
-    "taskStatus": "Completed"
+           {
+        "_id": "6739e7ff912af9e4249cbab8",
+        "taskName": "Convert monolith to Microsevices",
+        "taskDescription": "converting a monolith application into multiple services",
+        "taskDue": "30/Nov/2024",
+        "taskCreatedAt": "2024-11-17 17:39:36",
+        "taskUpdatedAt": "",
+        "taskStatus": "Pending",
+        "__v": 0
     }
   ```
 
@@ -334,15 +380,15 @@ const startServer = async () => {
 
   ```
          {
-    "_id": "673998e360d8b409bb1b7ab6",
-    "taskName": "Do work",
-    "taskDescription": "nothing",
-    "taskTitle": "Don't know",
-    "taskDue": "13/04/2025",
-    "taskCreatedAt": "2024-11-17 12:48:34",
-    "taskUpdatedAt": "",
-    "__v": 0,
-    "taskStatus": "Completed"
+        "_id": "6739d2a61415522d04038aed",
+        "taskName": "Complete REST API",
+        "taskDescription": "implement API endpoints for login ang register.",
+        "taskTitle": "Don't know",
+        "taskDue": "13/04/2029",
+        "taskCreatedAt": "2024-11-17 16:41:59",
+        "taskUpdatedAt": "2024-11-17 17:37:02",
+        "taskStatus": "Completed",
+        "__v": 0
     }
   ```
 
@@ -426,15 +472,6 @@ const startServer = async () => {
 **Example Request**
 
    <img src="./assets/updateTaskStatusRequest.PNG" alt="updateTaskStatusRequest" >
-
-- **Example Request Body**
-
-  ```
-  {
-  "taskStatus": "Completed"
-  }
-
-  ```
 
 **Expected Response**
 
