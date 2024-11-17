@@ -1,21 +1,23 @@
-# Health Care Service
+# User Task Management System
 
 # Overview
 
-- This is a simple Health Care Services API that allows users to manage healthcare data.
-- Users can add new healthcare services, including service name, description, and price.
-- Users can update existing healthcare service details.
-- Users can delete healthcare service records.
-- The API also allows users to fetch and view all available healthcare services data from the database.
-- Data management is streamlined with CRUD (Create, Read, Update, Delete) operations.
-- The API is designed to ensure data integrity and provide easy access for healthcare-related data management.
+- This is a simple User Task Management API that allows users to manage their tasks efficiently.
+- Users can add new tasks, including details like task name, description, and deadline.
+- Users can update existing task details as needed.
+- Users can delete tasks that are no longer relevant.
+- The API also allows users to fetch and view all available tasks from the database.
+- Task management is streamlined with CRUD (Create, Read, Update, Delete) operations.
+- The API is designed to ensure data integrity and provide an easy-to-use interface for managing user tasks.
 
 # Set up and Installation
 
 ```
-"dependencies": {
+ dependencies": {
+    "bcryptjs": "^2.4.3",
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
+    "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.8.1"
   }
 ```
@@ -25,6 +27,10 @@
 - **express**: Express is a fast, unopinionated, minimalist web framework for Node.js. It is used for building web applications and APIs. Express provides a robust set of features to develop web and mobile applications, such as routing, middleware support, and template rendering.
 
 - **mongoose**: Mongoose is an Object Data Modeling (ODM) library for MongoDB and Node.js. It manages relationships between data, provides schema validation, and offers a straightforward query API for interacting with MongoDB. Mongoose is particularly useful for defining models and handling database operations in a structured manner.
+
+- **bcryptjs**: This library is used for hashing and comparing passwords, providing secure user authentication by hashing passwords before storing them in the database.
+
+- **jsonwebtoken**: It allows the creation and verification of JSON Web Tokens (JWTs) for securely transmitting information between parties, often used for user authentication and authorization in web applications.
 
 ### Establishing Data Base Connection
 
@@ -57,59 +63,60 @@ After establishing the connection to our database then we can start our server.
 const startServer = async () => {
   const PORT = process.env.PORT;
   try {
-    const db = await connectDB();
-    app.use("/api/v1/healthCare", healthServiceRouter());
+    await connectDB();
+
+    // router middlewares
+    app.use("/api/v1", taskRouter());
+    app.use("/api/v1/auth", authRouter());
+
+    // server listening
     app.listen(PORT, () => console.log(`server is running on port ${PORT}`));
   } catch (err) {
     console.log(err);
-    return res.status(500).json({ message: "Internal Server Error" });
   }
-};
-
-startServer();
+}
 ```
 
 # API Usage
 
 ## Endpoints
 
-### 1) Add Health Care Service
+- User has to register before doing any crud operations.
+- If user sucessfully registerd, user will get jwt token. So, that user can access
+  different resources of an application.
 
-**Endpoint**: `/api/v1/addService`
+### User Registeration
 
-**Request Method** : `POST`
+    **Endpoint**: `/api/v1/register`
 
-**Description**:
+    **Request Method** : `POST`
 
-- This endpoint allows users to add new healthcare services to the database. Users can specify details such as the service name, a description of the service, and its price. Once posted, the data is stored for further operations like updating, fetching, or deleting services. This feature enables easy management and tracking of healthcare offerings within the system.
+    **Request Body** :
 
-**Request Body** :
+                ```
 
-```
-
- {
- "serviceName",
- "serviceDescription" ,
- "servicePrice",
- }
-
-```
+                {
+                "userName",
+                "emailId" ,
+                "passWord",
+                }
+                ```
 
 **Example Request**
 
- - **Example Request Body** :
+- **Example Request Body** :
 
-    ```
-    
-     {
-     "serviceName" : "General Checkup",
-     "serviceDescription" : "Routine physical examination to assess overall health.",
-     "servicePrice" : "100$"
-     }
-    
-    ```
+  ```
 
-    <img src="./assets/addServiceExample.PNG" alt="addServiceExample" height="300px">
+   {
+   "userName" : "Jon Snow",
+   "emailId" : "snow@gmail.com",
+   "passWord" : "house stark"
+   }
+
+  ```
+
+   <img src="./assets/addServiceExample.PNG" alt="addServiceExample" height="300px">
 
 **Expected Response**
 
@@ -119,22 +126,133 @@ startServer();
 
   ```
     {
-        "message": "New Service has been successfully added."
+    "message": "user is register successfully.",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3MzlkMzg2NzhlNjNhNjczOWVkMTM0ZiIsImlhdCI6MTczMTg0Mjk1MCwiZXhwIjoxNzMxODQ2NTUwfQ.r5mIZf81IkUwfHzT1MJn5PJ7bgiuTp09nwzQNqtObTQ"
     }
   ```
+
 - **Response**:
-  
+
     <img src="./assets/addServiceResponse.PNG" alt="Add Service response" height="300px">
 
-### 2) Get All Available Health Care Services
+### User Login
 
-**Endpoint**: `/api/v1/getAllServices`
+- User will also get jwt token when user logged in.
+
+  **Endpoint**: `/api/v1/login`
+
+  **Request Method** : `POST`
+
+  **Request Body** :
+
+              ```
+
+              {
+              "emailId" ,
+              "passWord",
+              }
+              ```
+
+**Example Request**
+
+- **Example Request Body** :
+
+  ```
+
+   {
+   "emailId" : "snow@gmail.com",
+   "passWord" : "house stark"
+   }
+
+  ```
+
+   <img src="./assets/addServiceExample.PNG" alt="addServiceExample" height="300px">
+
+**Expected Response**
+
+- **Status**: 200 OK
+
+- **Response Body**:
+
+  ```
+    {
+    "message": "User Logged in Successully.",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3MzlkMzg2NzhlNjNhNjczOWVkMTM0ZiIsImlhdCI6MTczMTg0Mjk1MCwiZXhwIjoxNzMxODQ2NTUwfQ.r5mIZf81IkUwfHzT1MJn5PJ7bgiuTp09nwzQNqtObTQ"
+    }
+  ```
+
+- **Response**:
+
+    <img src="./assets/addServiceResponse.PNG" alt="Add Service response" height="300px">
+
+### 1) Add User Task
+
+**Endpoint**: `/api/v1/addTask`
+
+**Request Method** : `POST`
+
+**Description**:
+
+- This endpoint allows users to add new tasks to the database. Users can specify details such as the task name, a description of the service, and its due data. Once posted, the data is stored for further operations like updating, fetching, or deleting services. This feature enables easy management and tracking of user tasks offerings within the system.
+
+**Request Body** :
+
+```
+
+ {
+ "taskName",
+ "taskDescription" ,
+ "taskDue",
+ }
+
+```
+
+**Request Headers** :
+
+- User can only make addTask requerst if user is logged in. So, if user is logged in, then
+  user has to make request along with jwt token
+
+**Example Request**
+
+- **Example Request Body** :
+
+  ```
+
+   {
+     "taskName": "Do work",
+    "taskDescription": "nothing",
+    "taskTitle": "Don't know",
+   }
+
+  ```
+
+   <img src="./assets/addServiceExample.PNG" alt="addServiceExample" height="300px">
+
+**Expected Response**
+
+- **Status**: 200 OK
+
+- **Response Body**:
+
+  ```
+    {
+        "message": "New task has been successfully added."
+    }
+  ```
+
+- **Response**:
+
+    <img src="./assets/addServiceResponse.PNG" alt="Add Service response" height="300px">
+
+### 2) Get All User Tasks
+
+**Endpoint**: `/api/v1/getAllTasks`
 
 **Request Method** : `GET`
 
 **Description**:
 
-- This endpoint retrieves all available healthcare services stored in the database. It provides users with an overview of all services, including their names, descriptions, and prices. Only services that are marked as available will be returned. This feature is useful for users who need to browse, review, or select from the offered healthcare services.
+- This endpoint retrieves all user tasks stored in the database. It provides users with an overview of all tasks, including their names, descriptions, and due dates.
 
 **Example Request**
 
@@ -147,25 +265,70 @@ startServer();
 - **Response Body**:
 
   ```
-          [
-              {
-                  "_id": "6736e8d0420ff10acf48f5de",
-                  "serviceName": "General Checkup",
-                  "serviceDescription": "Routine physical examination to assess overall health.",
-                  "servicePrice": "100$",
-                  "isAvailable": true,
-                  "__v": 0
-              }
-          ]
+         {
+    "_id": "673998e360d8b409bb1b7ab6",
+    "taskName": "Do work",
+    "taskDescription": "nothing",
+    "taskTitle": "Don't know",
+    "taskDue": "13/04/2025",
+    "taskCreatedAt": "2024-11-17 12:48:34",
+    "taskUpdatedAt": "",
+    "__v": 0,
+    "taskStatus": "Completed"
+    }
   ```
 
 - **Response**:
-  
+
     <img src="./assets/getAllServicesResponse.PNG" alt="getAllServicesResponse" height="300px">
 
-### 3) Update Health Care Services
+### 3) Get User Task By TaskId
 
-**Endpoint**: `/api/v1/updateService`
+**Endpoint**: `/api/v1/userTask/:taskId`
+
+**Request Method** : `GET`
+
+**Description**:
+
+- This endpoint retrieves specific user task stored in the database. It provides users with an overview of tasks, including their names, descriptions, and due dates.
+
+**Example Request**
+
+- **Response Params**:
+
+  ```
+    {taskId : "673998e360d8b409bb1b7ab6"}
+  ```
+
+   <img src="./assets/getAllServicesRequest.PNG" alt="getAllServicesRequest" height="300px">
+
+**Expected Response**
+
+- **Status**: 200 OK
+
+- **Response Body**:
+
+  ```
+         {
+    "_id": "673998e360d8b409bb1b7ab6",
+    "taskName": "Do work",
+    "taskDescription": "nothing",
+    "taskTitle": "Don't know",
+    "taskDue": "13/04/2025",
+    "taskCreatedAt": "2024-11-17 12:48:34",
+    "taskUpdatedAt": "",
+    "__v": 0,
+    "taskStatus": "Completed"
+    }
+  ```
+
+- **Response**:
+
+    <img src="./assets/getAllServicesResponse.PNG" alt="getAllServicesResponse" height="300px">
+
+### 4) Update User Task
+
+**Endpoint**: `/api/v1//updateTask/:taskId`
 
 **Request Method** : `PUT`
 
@@ -173,19 +336,18 @@ startServer();
 
   ```
   {
-  "serviceName" ,
-  "serviceDescription" ,
-  "servicePrice",
-  "serviceId" -- Mandotory
+  "taskName" ,
+  "taskDescription" ,
+  "taskDue",
   }
 
   ```
-**Description**:
 
-- This endpoint allows users to update the details of an existing healthcare service. The request must include the unique `serviceId` to identify which service should be modified. Additionally, it accepts fields that the user wants to update, such as the `service name`, `service description`, or `service price`. Upon successful completion of the update, a success message is returned, confirming that the service data has been modified. This feature ensures that healthcare service information remains current and accurate.
-  
-- `serviceId` must be included to identify which record needs to be deleted.
-- `serviceId` is generated by mongoDB, when we are adding a new service.
+  **Description**:
+
+- This endpoint allows users to update the details of an existing user task. The request must include the unique `taskId` in url to identify which task should be modified. Additionally, it accepts fields that the user wants to update, such as the `task name`, `task description`, or `task due date`. Upon successful completion of the update, a success message is returned, confirming that the task data has been modified. This feature ensures that user task information remains current and accurate.
+- `taskId` must be included to identify which record needs to be deleted.
+- `taskId` is generated by mongoDB, when we are adding a new service.
 
 **Example Request**
 
@@ -195,10 +357,9 @@ startServer();
 
   ```
   {
-  "serviceName" : "General Checkup Health Care",
-  "serviceDescription" : "Routine physical examination to assess overall health.",
-  "servicePrice" : "100$",
-  "serviceId" : "6736e8d0420ff10acf48f5de"
+  "taskName": "Complete REST API",
+  "taskDescription": "implement API endpoints for login ang register.",
+  "taskDue": "13/04/2029"
   }
 
   ```
@@ -211,7 +372,7 @@ startServer();
 
   ```
   {
-     "message": "General Checkup Health Care has been successfully updated."
+      "message": "Complete REST API has been successfully updated."
   }
   ```
 
@@ -219,34 +380,34 @@ startServer();
 
       <img src="./assets/updateServiceResponse.PNG" alt="updateServiceResponse" height="300px">
 
-### 3) Delete Health Care Service
+### 5) Update User Task Status
 
-**Endpoint**: `/api/v1/deleteService`
+**Endpoint**: `/api/v1//updateTask/:taskId`
 
-**Request Method** : `DELETE`
+**Request Method** : `PATCH`
 
 - **Request Body**
 
   ```
   {
-  "serviceId"
+  "taskStatus" ,
   }
 
   ```
 
-**Description**:
+  **Description**:
 
-- This endpoint allows users to delete an existing healthcare service from the database. The request requires the `serviceId` of the record that needs to be deleted. Once the service is identified and removed, it will no longer be available for retrieval or display in the system. This functionality ensures efficient management of healthcare services by enabling the removal of outdated or unnecessary records.
+- This endpoint allows users to update the status of an existing user task . The request must include the unique `taskId` in url to identify which task should be modified.
 
 **Example Request**
 
-<img src="./assets/deleteServiceRequest.PNG" alt="deleteServiceRequest.PNG" height="300px">
+   <img src="./assets/updateServiceRequest.PNG" alt="updateServiceRequest" height="300px">
 
 - **Example Request Body**
 
   ```
   {
-  "serviceId" : "6736e8d0420ff10acf48f5de"
+  "taskStatus": "Completed"
   }
 
   ```
@@ -259,12 +420,60 @@ startServer();
 
   ```
   {
-     "message": "6736e8d0420ff10acf48f5de has been deleted successfully."
+      "message": "Complete REST API status has been successfully completed."
   }
   ```
-  
+
+  - **Response**:
+
+      <img src="./assets/updateServiceResponse.PNG" alt="updateServiceResponse" height="300px">
+
+### 6) Delete User Task
+
+**Endpoint**: `/api/v1/deleteTask/:taskId`
+
+**Request Method** : `DELETE`
+
+- **Request Param**
+
+  ```
+  {
+  "taskId"
+  }
+
+  ```
+
+**Description**:
+
+- This endpoint allows users to delete an existing user task from the database. The request requires the `taskId` of the record that needs to be deleted. Once the user task is identified and removed, it will no longer be available for retrieval or display in the system. This functionality ensures efficient management of user tasks by enabling the removal of outdated or unnecessary records.
+
+**Example Request**
+
+<img src="./assets/deleteServiceRequest.PNG" alt="deleteServiceRequest.PNG" height="300px">
+
+- **Example Request Param**
+
+  ```
+  {
+  "taskId" : "6739919634ef413c15bd8eb7"
+  }
+
+  ```
+
+**Expected Response**
+
+- **Status**: 200 OK
+
+- **Response Body**:
+
+  ```
+  {
+     "message": "6739919634ef413c15bd8eb7 has been deleted successfully."
+  }
+  ```
+
 - **Response**:
-  
+
   <img src="./assets/deleteServiceResponse.PNG" alt="deleteServiceResponse.PNG" height="300px">
 
 # Conclusion
