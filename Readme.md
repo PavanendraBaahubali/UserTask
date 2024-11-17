@@ -98,7 +98,11 @@ const startServer = async () => {
 ## User Task Schema
 
 - To add a new task to the database, we need a well-defined schema. A task typically consists of fields such as `taskName`, `taskDescription`, and `taskDue` to capture the key details of each task.
+
+- task could've also had `taskCreatedAt`, `taskUpdatedAt`, `taskStatus`. But user don't need to provide these data. These data is automatically, handled by backend program.
+
 - This schema ensures that all tasks adhere to a structured format, providing consistency and making data management easier.
+
 - By using a task schema, we can validate task data before adding it to the database, ensuring data accuracy and completeness for every task created. This structure also facilitates easier retrieval, updating, and management of tasks.
 
 ```
@@ -118,7 +122,7 @@ const userTaskSchema = new mongoose.Schema({
 
 - If a user updates an existing task, I consider the task to be `In Progress` indicating that work is ongoing and the task is actively being worked on.
 
-- When a user sends a PATCH request marking the task as completed, the status transitions to `Completed` signifying that the task has been successfully finished.
+- When a user sends a `PATCH` request marking the task as completed, the status transitions to `Completed` signifying that the task has been successfully finished.
 
 - When a user makes an update request, the taskStatus field is changed to `In Progress`. Additionally, the taskUpdatedAt field is set to the current timestamp, with its initial value being empty until an update occurs.
 
@@ -254,7 +258,7 @@ const userTaskSchema = new mongoose.Schema({
 - **Response**
   <img src="./assets/includeTokenResponse.PNG" alt="includeTokenResponse" >
 
-## Endpoints
+## CRUD Endpoints
 
 ### 1) Add User Task
 
