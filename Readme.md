@@ -79,8 +79,6 @@ const startServer = async () => {
 
 # API Usage
 
-## Endpoints
-
 - User has to register before doing any crud operations.
 - If user sucessfully registerd, user will get jwt token. So, that user can access
   different resources of an application.
@@ -208,6 +206,8 @@ const startServer = async () => {
 
 - **Response**
   <img src="./assets/includeTokenResponse.PNG" alt="includeTokenResponse" >
+
+## Endpoints
 
 ### 1) Add User Task
 
