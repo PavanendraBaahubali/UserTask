@@ -473,7 +473,7 @@ const startServer = async () => {
 
 **Example Request**
 
-<img src="./assets/deleteServiceRequest.PNG" alt="deleteServiceRequest.PNG" >
+<img src="./assets/deleteTaskRequest.PNG" alt="deleteTaskRequest.PNG" >
 
 - **Example Request Param**
 
@@ -498,8 +498,8 @@ const startServer = async () => {
 
 - **Response**:
 
-  <img src="./assets/deleteServiceResponse.PNG" alt="deleteServiceResponse.PNG" >
+  <img src="./assets/deleteTaskResponse.PNG" alt="deleteTaskResponse.PNG" >
 
 # Conclusion
 
-- This API simplifies managing healthcare services with endpoints to create, update, delete, and retrieve data. By defining clear data models and leveraging RESTful principles, it aims to enhance service availability and management in healthcare systems.
+- This API simplifies managing user task with endpoints to create, update, delete, and retrieve data. By defining clear data models and leveraging RESTful principles, it aims to enhance service availability and management in user task management systems.
