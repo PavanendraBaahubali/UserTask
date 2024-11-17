@@ -115,7 +115,7 @@ const startServer = async () => {
 
   ```
 
-   <img src="./assets/authRegisterRequest.PNG" alt="authRegisterRequest" height="300px">
+   <img src="./assets/authRegisterRequest.PNG" alt="authRegisterRequest" >
 
 **Expected Response**
 
@@ -132,7 +132,7 @@ const startServer = async () => {
 
 - **Response**:
 
-    <img src="./assets/authRegisterResponse.PNG" alt="authRegisterResponse" height="300px">
+    <img src="./assets/authRegisterResponse.PNG" alt="authRegisterResponse" >
 
 ### User Login
 
@@ -144,13 +144,12 @@ const startServer = async () => {
 
   **Request Body** :
 
-              ```
-
-              {
-              "emailId" ,
-              "passWord",
-              }
-              ```
+  ```
+  {
+  "emailId" ,
+  "passWord",
+  }
+  ```
 
 **Example Request**
 
@@ -165,7 +164,7 @@ const startServer = async () => {
 
   ```
 
-   <img src="./assets/authLoginRequest.PNG" alt="authLoginRequest" height="300px">
+   <img src="./assets/authLoginRequest.PNG" alt="authLoginRequest" >
 
 **Expected Response**
 
@@ -182,7 +181,7 @@ const startServer = async () => {
 
 - **Response**:
 
-    <img src="./assets/authLoginResponse.PNG" alt="Add Service response" height="300px">
+    <img src="./assets/authLoginResponse.PNG" alt="Add Service response" >
 
 ### 1) Add User Task
 
@@ -225,7 +224,7 @@ const startServer = async () => {
 
   ```
 
-   <img src="./assets/addTaskRequest.PNG" alt="addTaskRequest" height="300px">
+   <img src="./assets/addTaskRequest.PNG" alt="addTaskRequest" >
 
 **Expected Response**
 
@@ -241,7 +240,7 @@ const startServer = async () => {
 
 - **Response**:
 
-    <img src="./assets/addTaskResponse.PNG" alt="addTaskResponse" height="300px">
+    <img src="./assets/addTaskResponse.PNG" alt="addTaskResponse" >
 
 ### 2) Get All User Tasks
 
@@ -255,7 +254,7 @@ const startServer = async () => {
 
 **Example Request**
 
-   <img src="./assets/getAllTaskRequest.PNG" alt="getAllTaskRequest" height="300px">
+   <img src="./assets/getAllTaskRequest.PNG" alt="getAllTaskRequest" >
 
 **Expected Response**
 
@@ -279,7 +278,7 @@ const startServer = async () => {
 
 - **Response**:
 
-    <img src="./assets/getAllTaskResponse.PNG" alt="getAllTaskResponse" height="300px">
+    <img src="./assets/getAllTaskResponse.PNG" alt="getAllTaskResponse" >
 
 ### 3) Get User Task By TaskId
 
@@ -299,7 +298,7 @@ const startServer = async () => {
     {taskId : "673998e360d8b409bb1b7ab6"}
   ```
 
-   <img src="./assets/getTaskByIdRequest.PNG" alt="getTaskByIdRequest" height="300px">
+   <img src="./assets/getTaskByIdRequest.PNG" alt="getTaskByIdRequest" >
 
 **Expected Response**
 
@@ -323,7 +322,7 @@ const startServer = async () => {
 
 - **Response**:
 
-    <img src="./assets/getTaskByIdResponse.PNG" alt="getTaskByIdResponse" height="300px">
+    <img src="./assets/getTaskByIdResponse.PNG" alt="getTaskByIdResponse" >
 
 ### 4) Update User Task
 
@@ -350,7 +349,7 @@ const startServer = async () => {
 
 **Example Request**
 
-   <img src="./assets/updateTaskRequest.PNG" alt="updateTaskRequest" height="300px">
+   <img src="./assets/updateTaskRequest.PNG" alt="updateTaskRequest" >
 
 - **Example Request Body**
 
@@ -377,7 +376,7 @@ const startServer = async () => {
 
   - **Response**:
 
-      <img src="./assets/updateTaskResponse.PNG" alt="updateTaskResponse" height="300px">
+      <img src="./assets/updateTaskResponse.PNG" alt="updateTaskResponse" >
 
 ### 5) Update User Task Status
 
@@ -400,7 +399,7 @@ const startServer = async () => {
 
 **Example Request**
 
-   <img src="./assets/updateTaskStatusRequest.PNG" alt="updateTaskStatusRequest" height="300px">
+   <img src="./assets/updateTaskStatusRequest.PNG" alt="updateTaskStatusRequest" >
 
 - **Example Request Body**
 
@@ -425,7 +424,7 @@ const startServer = async () => {
 
   - **Response**:
 
-      <img src="./assets/updateTaskStatusResponse.PNG" alt="updateTaskStatusResponse" height="300px">
+      <img src="./assets/updateTaskStatusResponse.PNG" alt="updateTaskStatusResponse" >
 
 ### 6) Delete User Task
 
@@ -448,7 +447,7 @@ const startServer = async () => {
 
 **Example Request**
 
-<img src="./assets/deleteServiceRequest.PNG" alt="deleteServiceRequest.PNG" height="300px">
+<img src="./assets/deleteServiceRequest.PNG" alt="deleteServiceRequest.PNG" >
 
 - **Example Request Param**
 
@@ -473,7 +472,7 @@ const startServer = async () => {
 
 - **Response**:
 
-  <img src="./assets/deleteServiceResponse.PNG" alt="deleteServiceResponse.PNG" height="300px">
+  <img src="./assets/deleteServiceResponse.PNG" alt="deleteServiceResponse.PNG" >
 
 # Conclusion
 
