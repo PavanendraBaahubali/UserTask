@@ -22,30 +22,33 @@
 
 - Example Requests in the Diagram:
   **POST** `/api/v1/addTask` - Adds a new task.
+
   **GET** `/api/v1/getAllTasks` - Retrieves all tasks.
+
   **PUT** `/api/v1/updateTask/:taskid` - Updates an existing task using a task ID.
+
   **DEL** `/api/v1/deleteTask/:taskId` - deleting an existing task using a task ID.
+
   **PATCH** `/api/v1/task/:taskId` - updating a specific field of a task using a task ID.
 
 - **2. Router Middlewares**
 - Description: This is the first layer responsible for handling routing logic. Router middlewares intercept requests that have a specific URL prefix.
 
-- Example: Requests with the prefix /api/v1/ may be handled by one middleware, while requests with the prefix /api/v1/auth can be processed by another middleware, each invoking the appropriate routers.
+- Example: Requests with the prefix `/api/v1/` may be handled by one middleware, while requests with the prefix `/api/v1/auth` can be processed by another middleware, each invoking the appropriate routers.
 
 - Purpose: It determines which router function should handle the incoming request, enabling efficient routing and separation of concerns for different request paths.
 
+  ```
+  app.use("/api/v1", taskRouter());
+  app.use("/api/v1/auth", authRouter());
 
-    ```
-    app.use("/api/v1", taskRouter());
-    app.use("/api/v1/auth", authRouter());
+  ```
 
-    ```
+  - The above two of them are router middewares. They will intercept the request and invoke the appropriate router.
 
-    - The above two of them are router middewares. They will intercept the request and invoke the appropriate router.
+  - From above, the first middleware will intercept the requests that have prefix `/api/v1` and invoke taskRouter.
 
-    - From above, the first middleware will intercept the requests that have prefix /api/v1 and invoke taskRouter.
-
-    - Second one will intercept requests have prefix /api/v1/auth and invoke authRouter.
+  - Second one will intercept requests have prefix `/api/v1/auth` and invoke authRouter.
 
 - **3. Router**
 - Description: The routing layer is responsible for directing the requests to the appropriate controllers based on the request path and method.
