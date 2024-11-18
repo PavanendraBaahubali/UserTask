@@ -10,7 +10,128 @@
 - Task management is streamlined with CRUD (Create, Read, Update, Delete) operations.
 - The API is designed to ensure data integrity and provide an easy-to-use interface for managing user tasks.
 
+# Architecture
+
+   <img src="./assets/architecture.png" alt="architecture" >
+
+- Here's a brief explanation of the diagram and the flow it represents for the high-level architecture of a backend system. The diagram primarily illustrates how HTTP requests are handled within a Node.js backend application, moving through various layers. Let's break it down step-by-step:
+
+- **1. Client Requests**
+
+- Description: The client (could be a browser, a mobile app, or any external service) sends HTTP requests to your server to perform certain operations, such as adding, retrieving, or updating tasks.
+
+- Example Requests in the Diagram:
+  **POST** `/api/v1/addTask` - Adds a new task.
+  **GET** `/api/v1/getAllTasks` - Retrieves all tasks.
+  **PUT** `/api/v1/updateTask/:taskid` - Updates an existing task using a task ID.
+  **DEL** `/api/v1/deleteTask/:taskId` - deleting an existing task using a task ID.
+  **PATCH** `/api/v1/task/:taskId` - updating a specific field of a task using a task ID.
+
+- **2. Router Middlewares**
+- Description: This is the first layer responsible for handling routing logic. Router middlewares intercept requests that have a specific URL prefix.
+
+- Example: Requests with the prefix /api/v1/ may be handled by one middleware, while requests with the prefix /api/v1/auth can be processed by another middleware, each invoking the appropriate routers.
+
+- Purpose: It determines which router function should handle the incoming request, enabling efficient routing and separation of concerns for different request paths.
+
+
+    ```
+    app.use("/api/v1", taskRouter());
+    app.use("/api/v1/auth", authRouter());
+
+    ```
+
+    - The above two of them are router middewares. They will intercept the request and invoke the appropriate router.
+
+    - From above, the first middleware will intercept the requests that have prefix /api/v1 and invoke taskRouter.
+
+    - Second one will intercept requests have prefix /api/v1/auth and invoke authRouter.
+
+- **3. Router**
+- Description: The routing layer is responsible for directing the requests to the appropriate controllers based on the request path and method.
+
+- Purpose: It helps organize and structure the API endpoints, making it easy to manage different routes for tasks, users, or other entities.
+
+- A router has multiple child routes like below one.
+
+  ```
+  // add router
+      router.post("/addTask", verifyJwtMiddleWare, (req, res) =>
+        taskController.addUserTask(req, res)
+      );
+
+      // all task router
+      router.get("/getAllTasks", verifyJwtMiddleWare, (req, res) =>
+        taskController.getAllTasks(req, res)
+      );
+
+      // get user task by id
+      router.get("/userTask/:taskId", verifyJwtMiddleWare, (req, res) =>
+        taskController.getTaskById(req, res)
+      );
+
+      // update the task router
+      router.put("/updateTask/:taskId", verifyJwtMiddleWare, (req, res) =>
+        taskController.updateTask(req, res)
+      );
+
+      // delete a particular health care service
+      router.delete("/deleteTask/:taskId", verifyJwtMiddleWare, (req, res) =>
+        taskController.deleteTask(req, res)
+      );
+
+      // marking user task as completed
+      router.patch("/task/:taskId", verifyJwtMiddleWare, (req, res) =>
+        taskController.updateTaskStatus(req, res)
+      );
+
+  ```
+
+- **4. JWT Middleware**
+
+  - Description: This middleware handles JSON Web Token (JWT) validation for authentication and authorization purposes. If the request requires user authentication, the JWT middleware ensures that the token provided by the client is valid and grants access based on the user's permissions.
+
+  - Purpose: It adds a security layer, preventing unauthorized access to protected routes.
+    Flow Example: If a request is made to access a protected route, the JWT middleware verifies the token. If valid, the request moves forward; otherwise, it may be blocked.
+
+- **5. Controller**
+
+- Description: The controller layer handles the business logic for incoming requests. It receives data from the client (request body, parameters, etc.) and orchestrates the necessary operations, often calling the appropriate services to perform actions like data retrieval, updates, or deletions.
+
+- Purpose: Controllers serve as an intermediary between the incoming request and the business logic or services layer, helping keep the logic clean and manageable.
+
+- Example: When the controller receives a request to addTask, it may validate the input data and then pass it to the service layer for further processing.
+
+**6. Service**
+
+- Description: The service layer contains the core business logic of the application. This is where the main operations and transformations on data happen. It interacts with the database layer to fetch or modify data as needed.
+
+- Purpose: Services ensure that controllers remain thin by handling complex operations here, following a separation of concerns.
+
+- Example: The service may handle operations like creating a new task, fetching tasks based on certain criteria, or updating an existing task.
+
+**7. Database**
+
+- Description: This is the storage layer where the application’s data resides. It could be any database like MongoDB, PostgreSQL, etc.
+
+P- urpose: It stores and manages the application's data, providing CRUD (Create, Read, Update, Delete) operations through queries or ORM (Object-Relational Mapping) tools.
+Flow Example: When a request to addTask is processed by the service layer, it interacts with the database to persist the task data.
+
+- **Flow Summary**
+
+- The client sends an HTTP request (e.g., POST /api/v1/addTask).
+- The router middleware handles the request and routes it to the correct endpoint.
+- If necessary, the JWT middleware validates the request’s token for security.
+- The controller receives the request and performs any necessary data validation or preprocessing.
+- The controller calls the appropriate service function to execute business logic.
+- The service interacts with the database to retrieve or modify data.
+- The response flows back through each layer to the client.
+
 # Set up and Installation
+
+- Initiate the node application using `npm init`
+
+- and then install following dependencies
 
 ```
  dependencies": {

@@ -1,7 +1,9 @@
 const express = require("express");
 const connectDB = require("./utils/databaseConnection");
-const taskRouter = require("./routers/taskRouter");
-const authRouter = require("./routers/authRouter");
+const taskRouter = require("./routes/taskRouter");
+const authRouter = require("./routes/authRouter");
+
+// config for .env files
 require("dotenv").config();
 
 const app = express();

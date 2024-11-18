@@ -5,6 +5,10 @@ const verifyJwtMiddleWare = require("../middleWares/verifyJwtMiddleWare");
 const taskRouter = () => {
   const router = express.Router();
   try {
+    // All these routes are protected routes, so, these request has to be authenitcated.
+    //  So, every request coming from these routes, verifyJwtMiddleWare middleware will intercept those
+    // requests and validate their JWT Token.
+
     // add router
     router.post("/addTask", verifyJwtMiddleWare, (req, res) =>
       taskController.addUserTask(req, res)
